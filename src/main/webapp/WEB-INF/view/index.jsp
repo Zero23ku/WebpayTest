@@ -9,6 +9,10 @@
 <body>
     <p>Hola Mundo</p>
     <button type="button" onclick="initTransaction();">Click Me!</button>
+
+    <form id="transbankform" method="post" target="_blank">
+        <input type="hidden" id="token_ws" name="token_ws"/>
+    </form>
 </body>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script>
@@ -17,8 +21,12 @@
     });
 
     function initTransaction(){
-        $.post("/transactionTest",function(){
+        $.post("/transactionTest",function(json){
             console.log("test init");
+            console.log(json);
+            $("#transbankform").attr("action",json.formAction);
+            $("#token_ws").val(json.tokenWS);
+            $("#transbankform").submit();
         });
     }
 
