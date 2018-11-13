@@ -8,6 +8,7 @@
 </head>
 <body>
     <p>Hola Mundo</p>
+    <input type="text" id="valor" name="valor"/>
     <button type="button" onclick="initTransaction();">Click Me!</button>
 
     <form id="transbankform" method="post" target="_blank">
@@ -21,12 +22,26 @@
     });
 
     function initTransaction(){
-        $.post("/transactionTest",function(json){
-            console.log("test init");
-            console.log(json);
-            $("#transbankform").attr("action",json.formAction);
-            $("#token_ws").val(json.tokenWS);
-            $("#transbankform").submit();
+        var valor = $("#valor").val();
+        valor = parseFloat(valor);
+        var data = {
+            amount : valor
+        }
+        $.ajax({
+            url: "/transactionTest",
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data){
+                console.log(data);
+                $("#transbankform").attr("action",data.formAction);
+                $("#token_ws").val(data.tokenWS);
+                $("#transbankform").submit();
+            },
+            error: function(){
+                alert("Error");
+            }
         });
     }
 

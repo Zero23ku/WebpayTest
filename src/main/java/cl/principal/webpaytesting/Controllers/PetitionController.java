@@ -2,16 +2,10 @@ package cl.principal.webpaytesting.Controllers;
 
 import cl.principal.webpaytesting.Services.TransbankService;
 
-
-import com.transbank.webpay.wswebpay.service.TransactionResultOutput;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
-
 
 @RestController
 public class PetitionController {
@@ -22,23 +16,14 @@ public class PetitionController {
         this.transbankService = transbankService;
     }
 
-    @GetMapping("/test")
-    public Map<String,String> getTest(){
-        return transbankService.testService();
-    }
-
     @PostMapping("/transactionTest")
-    public Map<String,String> transactionTest() throws Exception {
-       return transbankService.testTransbank();
+    public Map<String,String> transactionTest(@RequestBody Map<String,String> request) throws Exception {
+       return transbankService.testTransbank(Double.parseDouble(request.get("amount")));
     }
 
     @PostMapping("/transbankResponse")
-    public void transbankResponse(@RequestParam("token_ws") String tokenWs) throws  Exception{
-        transbankService.transbankCallback(tokenWs);
+    public ModelAndView transbankResponse(@RequestParam("token_ws") String tokenWs) throws  Exception {
+        return transbankService.transbankCallback(tokenWs);
     }
 
-    @PostMapping("/transbankFinal")
-    public String transbankFinal(@RequestParam("token_ws") String tokenWS){
-        return tokenWS;
-    }
 }
