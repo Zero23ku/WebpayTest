@@ -1,4 +1,6 @@
 spring:
+  application:
+      name: #project.artifactId#
   mvc:
     view:
       prefix: /WEB-INF/view/

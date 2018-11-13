@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class WebpaytestingApplication {
 
-	private static final Logger  log = LoggerFactory.getLogger(WebpaytestingApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(WebpaytestingApplication.class);
 
 	public static void main(String[] args) throws UnknownHostException {
 

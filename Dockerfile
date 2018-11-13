@@ -1,4 +1,4 @@
-FROM openjdk:11-jre-slim
+FROM openjdk:8
 ARG JAR_FILE
 
 WORKDIR /opt/app
