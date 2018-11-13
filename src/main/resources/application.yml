@@ -3,3 +3,8 @@ spring:
     view:
       prefix: /WEB-INF/view/
       suffix: .jsp
+server:
+  port: ${PORT:9000}
+  compression:
+    enabled: true
+    mime-types: application/json

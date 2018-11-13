@@ -19,6 +19,9 @@
     $(document).ready(function(){
         console.log("READY GO");
         $("#transbankform").submit();
+        setTimeout(function(){
+            window.top.close();
+        },1000);
     });
 
 </script>

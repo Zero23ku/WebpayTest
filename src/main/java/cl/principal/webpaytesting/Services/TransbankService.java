@@ -1,5 +1,6 @@
 package cl.principal.webpaytesting.Services;
 
+import cl.principal.webpaytesting.config.ApplicationProperties;
 import com.transbank.webpay.wswebpay.service.TransactionResultOutput;
 import com.transbank.webpay.wswebpay.service.WsTransactionDetailOutput;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Service
 public class TransbankService {
 
-    Configuration configuration;
-    WebpayNormal transaction;
+    private Configuration configuration;
+    private WebpayNormal transaction;
+    private ApplicationProperties applicationProperties;
 
-    TransbankService() throws  Exception{
+
+
+    TransbankService(ApplicationProperties applicationProperties) throws  Exception{
         this.configuration = Configuration.forTestingWebpayPlusNormal();
         this.transaction = new Webpay(configuration).getNormalTransaction();
+        this.applicationProperties = applicationProperties;
     }
 
     public Map<String,String> testTransbank(Double amount) throws Exception {
+        String port = applicationProperties.getPort();
         String sessionId = "mi-id-de-sesion";
         String buyOrder = String.valueOf(Math.abs(new Random().nextLong()));
-        String returnURL = "http://localhost:8080/transbankResponse";
-        String finalURL = "http://localhost:8080/transbankFinal";
+        String returnURL = "http://localhost:" + port + "/transbankResponse";
+        String finalURL = "http://localhost:" + port + "/transbankFinal";
         WsInitTransactionOutput initResult = transaction.initTransaction(
                 amount,sessionId,buyOrder,returnURL,finalURL
         );
